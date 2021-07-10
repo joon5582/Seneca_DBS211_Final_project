@@ -1,3 +1,0 @@
-C:\Users\Sukhman\OneDrive\Documents\GitHub\DBS211_project\Project1\Debug\Project1.exe
-C:\Users\joon5\Desktop\DBS211_project\Project1\Debug\Project1.exe
-C:\Users\joon5\Desktop\DBS211_project\Project1\Debug\Project1.pdb
