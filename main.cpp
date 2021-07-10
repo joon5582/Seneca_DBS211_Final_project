@@ -8,11 +8,6 @@ using namespace std;
 using namespace sdds;
 int main(void)
 {
-	char name[9] = "Junwoo";
-	char othername[10];
-
-	cout << othername;
-	//Like this way, we can push only source!
 
 	/* OCCI Variables */
 	Environment* env = nullptr;
