@@ -18,7 +18,7 @@
     <ClCompile Include="Source.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\DBS\Project1\dbModule.cpp">
+    <ClCompile Include="dbModule.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
