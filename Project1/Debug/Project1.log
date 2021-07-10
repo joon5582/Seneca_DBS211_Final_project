@@ -1,2 +1,4 @@
-﻿  Source.cpp
-  Project1.vcxproj -> C:\Users\joon5\Desktop\DBS211_project\Project1\Debug\Project1.exe
+﻿  dbModule.cpp
+C:\Users\joon5\Desktop\DBS\Project1\dbModule.cpp(2,10): fatal error C1083: Cannot open include file: 'occi.h': No such file or directory
+  Source.cpp
+  Generating Code...
