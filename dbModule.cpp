@@ -8,6 +8,8 @@ using namespace std;
 
 int main(void)
 {
+	//Like this way, we can push only source!
+
 	/* OCCI Variables */
 	Environment* env = nullptr;
 	Connection* conn = nullptr;
