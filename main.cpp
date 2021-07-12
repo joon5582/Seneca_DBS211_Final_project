@@ -13,35 +13,19 @@ int main(void)
 	Environment* env = nullptr;
 	Connection* conn = nullptr;
 	/* Used Variables */
-	string user = "dbs211_212c13";
-	string pass = "40102997";
+	string user = "dbs211_212c17";
+	string pass = "38462531";
 	string constr = "myoracle12c.senecacollege.ca:1521/oracle12c";
 	try {
 		env = Environment::createEnvironment(Environment::DEFAULT);
 		conn = env->createConnection(user, pass, constr);
-		cout << "Connection is Successful!" << endl;
-		//Statement* stmt = conn->createStatement();
-		//ResultSet* rs = stmt->executeQuery();
+
 		struct Employee* ep;
 		struct Employee emp1 = {};
 		ep = &emp1;
-		int employeeNum;
-		cout << "Enter employ number: ";
-		cin >> employeeNum;
-		if (findEmployee(conn, employeeNum, ep))
-		{
-			cout << "Employ number: " << ep->employeeNumber << endl;
-			cout << "Last name: " << ep->lastName << endl;
-			cout << "First name: " << ep->firstName << endl;
-			cout << "extenstion: " << ep->extension << endl;
-			cout << "Email: " << ep->email << endl;
-			cout << "Office Code: " << ep->officecode << endl;
-			cout << "Reports To: " << ep->reportsTo << endl;
-			cout << "Jon Title: " << ep->jobTitle << endl;
-		}
-		else
-			cout << "Employee does not exist!" << endl;
-		//conn->terminateStatement(stmt);
+		
+
+		displayEmployee(conn, *ep);
 		env->terminateConnection(conn);
 		Environment::terminateEnvironment(env);
 	}

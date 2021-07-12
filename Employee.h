@@ -18,6 +18,7 @@ namespace sdds {
 		char jobTitle[50];
 	};
 	int findEmployee(Connection* conn, int employeeNumber, struct Employee* emp);
+	void displayEmployee(Connection* conn, struct Employee emp);
 }
 
 #endif

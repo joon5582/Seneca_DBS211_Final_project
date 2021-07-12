@@ -1,3 +1,4 @@
+#include <iostream>
 #include "Employee.h"
 #include "cstring.h"
 namespace sdds {
@@ -23,4 +24,30 @@ namespace sdds {
 		conn->terminateStatement(stmt);
 		return res;
 	}
+
+	void displayEmployee(Connection* conn, Employee ep)
+	{
+		int employeeNum;
+		cout << "Enter Employee Number: ";
+		cin >> employeeNum;
+		if (findEmployee(conn, employeeNum, &ep))
+		{
+			cout << endl << "-------------- Employee Information -------------" << endl;
+			cout << "Employee Number: " << ep.employeeNumber << endl;
+			cout << "Last Name: " << ep.lastName << endl;
+			cout << "First Name: " << ep.firstName << endl;
+			cout << "Extenstion: " << ep.extension << endl;
+			cout << "Email: " << ep.email << endl;
+			cout << "Office Code: " << ep.officecode << endl;
+			cout << "Manager ID: " << ep.reportsTo << endl;
+			cout << "Job Title: " << ep.jobTitle << endl;
+		}
+		else
+			cout << "Employee "<<employeeNum<<" does not exist." << endl;
+		
+
+	}
+
+	
+
 }
