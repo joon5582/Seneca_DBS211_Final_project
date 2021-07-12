@@ -2,7 +2,7 @@
 #include "Employee.h"
 #include "cstring.h"
 namespace sdds {
-	int findEmployee(Connection* conn, int employeeNumber, struct Employee* emp)
+	int findEmployee(Connection* conn, int employeeNumber, Employee* emp)
 	{
 		int res = 0;
 		Statement* stmt = conn->createStatement();

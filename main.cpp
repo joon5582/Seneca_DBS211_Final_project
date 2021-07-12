@@ -20,8 +20,8 @@ int main(void)
 		env = Environment::createEnvironment(Environment::DEFAULT);
 		conn = env->createConnection(user, pass, constr);
 
-		struct Employee* ep;
-		struct Employee emp1 = {};
+		Employee* ep;
+		Employee emp1 = {};
 		ep = &emp1;
 		
 
