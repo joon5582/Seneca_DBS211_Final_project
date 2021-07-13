@@ -21,8 +21,9 @@ struct Employee
 };
 int findEmployee(Connection* conn, int employeeNumber, struct Employee* emp);
 void displayEmployee(Connection* conn, struct Employee emp);
-int menu();
 void displayAllEmployees(Connection* conn);
+void menu(Connection* conn);
+int getInt();
 
 int main(void)
 {
@@ -39,48 +40,7 @@ int main(void)
 	try {
 		env = Environment::createEnvironment(Environment::DEFAULT);
 		conn = env->createConnection(user, pass, constr);
-
-		Employee* ep;
-		Employee emp1 = {};
-		ep = &emp1;
-
-		while (check)
-		{
-			number = menu();
-			switch (number)
-			{
-			case 1:
-				//cout << "1" << endl;
-
-				int employeeNum;
-				cout << "Enter Employee Number: ";
-				cin >> employeeNum;
-				if (findEmployee(conn, employeeNum, ep))
-				{
-					displayEmployee(conn, *ep);
-				}
-				else
-					cout << "Employee " << employeeNum << " does not exist." << endl<<endl;
-				break;
-			case 2:
-				displayAllEmployees(conn);
-				cout << endl;
-				break;
-			case 3:
-				cout << "3" << endl;
-				break;
-			case 4:
-				cout << "4" << endl;
-				break;
-			case 5:
-				cout << "5" << endl;
-				break;
-			default:
-				cout << "Exiting..." << endl;
-				check = false;
-				break;
-			}
-		}
+		menu(conn);
 		env->terminateConnection(conn);
 		Environment::terminateEnvironment(env);
 	}
@@ -91,25 +51,11 @@ int main(void)
 	//system("pause");  // to stop the output window from closing in VS2013
 	return 0;
 }
-
-
-
-int menu()
+int getInt()
 {
-	int choice = 0;
-	cout << "********************* HR Menu *********************" << endl;
-	cout << "1) Find Employee" << endl;
-	cout << "2) Employees Report" << endl;
-	cout << "3) Add Employee" << endl;
-	cout << "4) Update Employee" << endl;
-	cout << "5) Remove Employee" << endl;
-	cout << "0) Exit" << endl;
-	cout << "Enter an option (0-5): ";
-
 	int number = 0;
 	bool check = true;
 	char letter = 'X';
-
 	while (check) {
 		cin >> number;
 		letter = cin.get();
@@ -134,6 +80,59 @@ int menu()
 }
 
 
+void menu(Connection* conn)
+{
+	int choice = 0;
+	int check = true;
+	while (check)
+	{
+		cout << "********************* HR Menu *********************" << endl;
+		cout << "1) Find Employee" << endl;
+		cout << "2) Employees Report" << endl;
+		cout << "3) Add Employee" << endl;
+		cout << "4) Update Employee" << endl;
+		cout << "5) Remove Employee" << endl;
+		cout << "0) Exit" << endl;
+		cout << "Enter an option (0-5): ";
+
+		choice = getInt();
+
+		switch (choice)
+		{
+		case 1:
+			Employee ep;
+			int employeeNum;
+			cout << "Enter Employee Number: ";
+			cin >> employeeNum;
+			if (findEmployee(conn, employeeNum, &ep))
+			{
+				displayEmployee(conn, ep);
+			}
+			else
+				cout << "Employee " << employeeNum << " does not exist." << endl << endl;
+			break;
+		case 2:
+			displayAllEmployees(conn);
+			cout << endl;
+			break;
+		case 3:
+			cout << "3" << endl;
+			break;
+		case 4:
+			cout << "4" << endl;
+			break;
+		case 5:
+			cout << "5" << endl;
+			break;
+		default:
+			cout << "Exiting..." << endl;
+			check = false;
+			break;
+		}
+	}
+}
+
+
 void displayAllEmployees(Connection* conn)
 {
 
@@ -149,9 +148,9 @@ void displayAllEmployees(Connection* conn)
 		cout << "ResultSet is empty." << endl;
 	}
 	else {
-		cout << "------   ---------------    ---------------------------------  ----------------  ---------   -----------------" << endl;
-		cout << "ID       Employee Name      Email                              Phone             Extension   Manager          " << endl;
-		cout << "-----    ---------------    ---------------------------------  ----------------  ---------   -----------------" << endl;
+		cout << "------    ---------------    ---------------------------------  ----------------  ---------   -----------------" << endl;
+		cout << "ID        Employee Name      Email                              Phone             Extension   Manager          " << endl;
+		cout << "-----     ---------------    ---------------------------------  ----------------  ---------   -----------------" << endl;
 		do {
 			int id = rs->getInt(1);
 			string name = rs->getString(2);
@@ -161,7 +160,7 @@ void displayAllEmployees(Connection* conn)
 			string managerName = rs->getString(6);
 
 			cout.setf(ios::left);
-			cout.width(9);
+			cout.width(10);
 			cout << id;
 			cout.unsetf(ios::left);
 
@@ -224,6 +223,7 @@ void displayEmployee(Connection* conn, Employee ep)
 	cout << "Email: " << ep.email << endl;
 	cout << "Office Code: " << ep.officecode << endl;
 	cout << "Manager ID: " << ep.reportsTo << endl;
+	cout << "Job Title: " << ep.jobTitle << endl << endl;
 	cout << "Job Title: " << ep.jobTitle << endl<<endl;
 
 }
