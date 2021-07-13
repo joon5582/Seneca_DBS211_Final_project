@@ -1,8 +1,8 @@
 // Milestone 1 DBS 211 NCC
 // Group project
-// Name :
-// Name :
-//  Student Name  : Balazs Sztojkovics  Student ID    : 144563202  Student Email : bsztojkovics@seneca.ca
+// Student Name: Junwoo Lee,	Student ID: 124395203,  Student	Email: jlee648@myseneca.ca
+// Student Name:
+// Student Name: Balazs Sztojkovics,	 Student ID: 144563202,   Student Email: bsztojkovics@seneca.ca
 
 
 #include <iostream>
@@ -47,10 +47,6 @@ int main(void)
 		env = Environment::createEnvironment(Environment::DEFAULT);
 		conn = env->createConnection(user, pass, constr);
 
-		Employee* ep;
-		Employee emp1 = {};
-		ep = &emp1;
-
 		while (check)
 		{
 			number = menu();
@@ -58,13 +54,13 @@ int main(void)
 			{
 			case 1:
 				//cout << "1" << endl;
-
+				Employee emp1 = {};
 				int employeeNum;
 				cout << "Enter Employee Number: ";
 				cin >> employeeNum;
-				if (findEmployee(conn, employeeNum, ep))
+				if (findEmployee(conn, employeeNum, &emp1))
 				{
-					displayEmployee(conn, *ep);
+					displayEmployee(conn, emp1);
 				}
 				else
 					cout << "Employee " << employeeNum << " does not exist." << endl<<endl;
