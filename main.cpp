@@ -149,9 +149,9 @@ void displayAllEmployees(Connection* conn)
 		cout << "ResultSet is empty." << endl;
 	}
 	else {
-		cout << "------    ---------------    ---------------------------------  ----------------  ---------   -----------------" << endl;
-		cout << "ID        Employee Name      Email                              Phone             Extension   Manager          " << endl;
-		cout << "-----     ---------------    ---------------------------------  ----------------  ---------   -----------------" << endl;
+		cout << "------   ---------------    ---------------------------------  ----------------  ---------   -----------------" << endl;
+		cout << "ID       Employee Name      Email                              Phone             Extension   Manager          " << endl;
+		cout << "-----    ---------------    ---------------------------------  ----------------  ---------   -----------------" << endl;
 		do {
 			int id = rs->getInt(1);
 			string name = rs->getString(2);
@@ -161,7 +161,7 @@ void displayAllEmployees(Connection* conn)
 			string managerName = rs->getString(6);
 
 			cout.setf(ios::left);
-			cout.width(10);
+			cout.width(9);
 			cout << id;
 			cout.unsetf(ios::left);
 
