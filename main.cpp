@@ -192,6 +192,7 @@ int findEmployee(Connection* conn, int employeeNumber, Employee* emp)
 	{
 		res = 1;
 		emp->employeeNumber = rs->getInt(1);
+<<<<<<< HEAD
 		rs->getString(2).copy(emp->lastName, 49);
 		rs->getString(3).copy(emp->firstName, 49);
 		rs->getString(4).copy(emp->extension, 9);
@@ -199,6 +200,15 @@ int findEmployee(Connection* conn, int employeeNumber, Employee* emp)
 		rs->getString(6).copy(emp->officecode, 9);
 		emp->reportsTo = rs->getInt(7);
 		rs->getString(8).copy(emp->jobTitle, 49);
+=======
+		strcpy(emp->lastName, rs->getString(2).c_str());
+		strcpy(emp->firstName, rs->getString(3).c_str());
+		strcpy(emp->extension, rs->getString(4).c_str());
+		strcpy(emp->email, rs->getString(5).c_str());
+		strcpy(emp->officecode, rs->getString(6).c_str());
+		emp->reportsTo = rs->getInt(7);
+		strcpy(emp->jobTitle, rs->getString(8).c_str());
+>>>>>>> 3c41b5913affbff4bacd8f7be1c08bf609b2ef84
 	}
 	conn->terminateStatement(stmt);
 	return res;
