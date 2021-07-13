@@ -190,15 +190,15 @@ int findEmployee(Connection* conn, int employeeNumber, Employee* emp)
 	ResultSet* rs = stmt->executeQuery();
 	if (rs->next())
 	{
-		//res = 1;
-		//emp->employeeNumber = rs->getInt(1);
-		//strCpy(emp->lastName, rs->getString(2).c_str());
-		//strCpy(emp->firstName, rs->getString(3).c_str());
-		//strCpy(emp->extension, rs->getString(4).c_str());
-		//strCpy(emp->email, rs->getString(5).c_str());
-		//strCpy(emp->officecode, rs->getString(6).c_str());
-		//emp->reportsTo = rs->getInt(7);
-		//strCpy(emp->jobTitle, rs->getString(8).c_str());
+		res = 1;
+		emp->employeeNumber = rs->getInt(1);
+		rs->getString(2).copy(emp->lastName, 49);
+		rs->getString(3).copy(emp->firstName, 49);
+		rs->getString(4).copy(emp->extension, 9);
+		rs->getString(5).copy(emp->email, 99);
+		rs->getString(6).copy(emp->officecode, 9);
+		emp->reportsTo = rs->getInt(7);
+		rs->getString(8).copy(emp->jobTitle, 49);
 	}
 	conn->terminateStatement(stmt);
 	return res;
