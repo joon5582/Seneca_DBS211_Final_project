@@ -53,7 +53,7 @@ int main(void)
 			switch (number)
 			{
 			case 1:
-				//cout << "1" << endl;
+				
 				Employee emp1 = {};
 				int employeeNum;
 				cout << "Enter Employee Number: ";
