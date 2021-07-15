@@ -1,5 +1,5 @@
 // Milestone 1 DBS 211 NCC
-// Group project
+// Group project (Group 11)
 // Student Name: Junwoo Lee,	Student ID: 124395203,  Student	Email: jlee648@myseneca.ca
 // Student Name: Sukhmanpreet Kaur Malhi,	Student ID: 134893205,	Student Email: skmalhi2@myseneca.ca 
 // Student Name: Balazs Sztojkovics,	 Student ID: 144563202,   Student Email: bsztojkovics@seneca.ca
@@ -46,18 +46,16 @@ int main(void)
 	try {
 		env = Environment::createEnvironment(Environment::DEFAULT);
 		conn = env->createConnection(user, pass, constr);
-
 		while (check)
 		{
 			number = menu();
 			switch (number)
 			{
 			case 1:
-				
-				Employee emp1 = {};
 				int employeeNum;
 				cout << "Enter Employee Number: ";
 				cin >> employeeNum;
+				Employee emp1;
 				if (findEmployee(conn, employeeNum, &emp1))
 				{
 					displayEmployee(conn, emp1);
