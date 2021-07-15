@@ -4,11 +4,11 @@
 // Student Name: Sukhmanpreet Kaur Malhi,	Student ID: 134893205,	Student Email: skmalhi2@myseneca.ca 
 // Student Name: Balazs Sztojkovics,	 Student ID: 144563202,   Student Email: bsztojkovics@seneca.ca
 
-
+#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <occi.h>
 #include <string.h>
-
+#include <cstring>
 using oracle::occi::Environment;
 using oracle::occi::Connection;
 using namespace oracle::occi;
@@ -202,14 +202,13 @@ int findEmployee(Connection* conn, int employeeNumber, Employee* emp)
 	{
 		res = 1;
 		emp->employeeNumber = rs->getInt(1);
-		rs->getString(2).copy(emp->lastName, 49);
-		rs->getString(3).copy(emp->firstName, 49);
-		rs->getString(4).copy(emp->extension, 9);
-		rs->getString(5).copy(emp->email, 99);
-		rs->getString(6).copy(emp->officecode, 9);
+		strncpy(emp->lastName, rs->getString(2).c_str(), 49);
+		strncpy(emp->firstName, rs->getString(3).c_str(), 49);
+		strncpy(emp->extension, rs->getString(4).c_str(), 9);
+		strncpy(emp->email, rs->getString(5).c_str(), 99);
+		strncpy(emp->officecode, rs->getString(6).c_str(), 9);
 		emp->reportsTo = rs->getInt(7);
-		rs->getString(8).copy(emp->jobTitle, 49);
-
+		strncpy(emp->jobTitle, rs->getString(8).c_str(), 49);
 	}
 	conn->terminateStatement(stmt);
 	return res;
