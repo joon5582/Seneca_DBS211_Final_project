@@ -1,4 +1,4 @@
-// Milestone 1 DBS 211 NCC
+// Milestone 2 DBS 211 NCC
 // Group project (Group 11)
 // Student Name: Junwoo Lee,	Student ID: 124395203,  Student	Email: jlee648@myseneca.ca
 // Student Name: Sukhmanpreet Kaur Malhi,	Student ID: 134893205,	Student Email: skmalhi2@myseneca.ca 
@@ -30,7 +30,8 @@ int findEmployee(Connection* conn, int employeeNumber, struct Employee* emp);
 void displayEmployee(Connection* conn, struct Employee emp);
 int menu();
 void displayAllEmployees(Connection* conn);
-
+void getEmployee(struct Employee* emp);
+void insertEmployee(Connection* conn, struct Employee emp);
 int main(void)
 {
 	int number = 0;
@@ -61,14 +62,16 @@ int main(void)
 					displayEmployee(conn, emp1);
 				}
 				else
-					cout << "Employee " << employeeNum << " does not exist." << endl<<endl;
+					cout << "Employee " << employeeNum << " does not exist." << endl << endl;
 				break;
 			case 2:
 				displayAllEmployees(conn);
 				cout << endl;
 				break;
 			case 3:
-				cout << "3" << endl;
+				Employee temp;
+				getEmployee(&temp);
+				insertEmployee(conn, temp);
 				break;
 			case 4:
 				cout << "4" << endl;
@@ -191,6 +194,11 @@ void displayAllEmployees(Connection* conn)
 	}
 }
 
+void getEmployee(Employee* emp)
+{
+	//part of Bal..!
+}
+
 int findEmployee(Connection* conn, int employeeNumber, Employee* emp)
 {
 	int res = 0;
@@ -201,14 +209,17 @@ int findEmployee(Connection* conn, int employeeNumber, Employee* emp)
 	if (rs->next())
 	{
 		res = 1;
-		emp->employeeNumber = rs->getInt(1);
-		strncpy(emp->lastName, rs->getString(2).c_str(), 49);
-		strncpy(emp->firstName, rs->getString(3).c_str(), 49);
-		strncpy(emp->extension, rs->getString(4).c_str(), 9);
-		strncpy(emp->email, rs->getString(5).c_str(), 99);
-		strncpy(emp->officecode, rs->getString(6).c_str(), 9);
-		emp->reportsTo = rs->getInt(7);
-		strncpy(emp->jobTitle, rs->getString(8).c_str(), 49);
+		if (emp)
+		{
+			emp->employeeNumber = rs->getInt(1);
+			strncpy(emp->lastName, rs->getString(2).c_str(), 49);
+			strncpy(emp->firstName, rs->getString(3).c_str(), 49);
+			strncpy(emp->extension, rs->getString(4).c_str(), 9);
+			strncpy(emp->email, rs->getString(5).c_str(), 99);
+			strncpy(emp->officecode, rs->getString(6).c_str(), 9);
+			emp->reportsTo = rs->getInt(7);
+			strncpy(emp->jobTitle, rs->getString(8).c_str(), 49);
+		}
 	}
 	conn->terminateStatement(stmt);
 	return res;
@@ -224,6 +235,29 @@ void displayEmployee(Connection* conn, Employee ep)
 	cout << "Email: " << ep.email << endl;
 	cout << "Office Code: " << ep.officecode << endl;
 	cout << "Manager ID: " << ep.reportsTo << endl;
-	cout << "Job Title: " << ep.jobTitle << endl<<endl;
+	cout << "Job Title: " << ep.jobTitle << endl << endl;
+
+}
+
+void insertEmployee(Connection* conn, struct Employee emp) {
+	if (findEmployee(conn, emp.employeeNumber, nullptr))
+	{
+		cout << "An employee with the same employee number exists." << endl;
+	}
+	else
+	{
+		Statement* stmt = conn->createStatement();
+		stmt->setSQL("INSERT INTO dbs211_employees(employeenumber, lastname, firstname, extension, email, officecode, reportsto, jobtitle) VALUES(:1, :2, :3, :4, :5, :6, :7, :8)");
+		stmt->setInt(1, emp.employeeNumber);
+		stmt->setString(2, emp.lastName);
+		stmt->setString(3, emp.firstName);
+		stmt->setString(4, emp.extension);
+		stmt->setString(5, emp.email);
+		stmt->setString(6, emp.officecode);
+		stmt->setInt(7, emp.reportsTo);
+		stmt->setString(8, emp.jobTitle);
+		cout << "The new employee is added successfully." << endl;
+	}
+
 
 }
