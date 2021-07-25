@@ -27,11 +27,13 @@ struct Employee
 	char jobTitle[50];
 };
 int findEmployee(Connection* conn, int employeeNumber, struct Employee* emp);
+void getEmployee(Employee* emp);
+void insertEmployee(Connection* conn, struct Employee emp);
 void displayEmployee(Connection* conn, struct Employee emp);
 int menu();
 void displayAllEmployees(Connection* conn);
-void getEmployee(struct Employee* emp);
-void insertEmployee(Connection* conn, struct Employee emp);
+void deleteEmployee(Connection* conn, int employeeNumber);
+
 int main(void)
 {
 	int number = 0;
@@ -43,6 +45,8 @@ int main(void)
 	string user = "dbs211_212c17";
 	string pass = "38462531";
 	string constr = "myoracle12c.senecacollege.ca:1521/oracle12c";
+
+
 
 	try {
 		env = Environment::createEnvironment(Environment::DEFAULT);
@@ -77,7 +81,10 @@ int main(void)
 				cout << "4" << endl;
 				break;
 			case 5:
-				cout << "5" << endl;
+				int employeeNumber;
+				cout << "Enter Employee Number: ";
+				cin >> employeeNumber;
+				deleteEmployee(conn, employeeNumber);
 				break;
 			default:
 				cout << "Exiting..." << endl;
@@ -196,7 +203,24 @@ void displayAllEmployees(Connection* conn)
 
 void getEmployee(Employee* emp)
 {
-	//part of Bal..!
+	cout << endl << "-------------- New Employee Information -------------" << endl;
+	cout << "Employee Number: ";
+	cin >> emp->employeeNumber;
+	cout << "Last Name: ";
+	cin >> emp->lastName;
+	cout << "First Name: ";
+	cin >> emp->firstName;
+	cout << "Extenstion: ";
+	cin >> emp->extension;
+	cout << "Email: ";
+	cin >> emp->email;
+	cout << "Office Code: ";
+	cin >> emp->officecode;
+	cout << "Manager ID: ";
+	cin >> emp->reportsTo;
+	cout << "Job Title: ";
+	cin >> emp->jobTitle;
+	cout << endl;
 }
 
 int findEmployee(Connection* conn, int employeeNumber, Employee* emp)
@@ -239,7 +263,9 @@ void displayEmployee(Connection* conn, Employee ep)
 
 }
 
-void insertEmployee(Connection* conn, struct Employee emp) {
+void insertEmployee(Connection* conn, struct Employee emp)
+{
+
 	if (findEmployee(conn, emp.employeeNumber, nullptr))
 	{
 		cout << "An employee with the same employee number exists." << endl;
@@ -256,8 +282,30 @@ void insertEmployee(Connection* conn, struct Employee emp) {
 		stmt->setString(6, emp.officecode);
 		stmt->setInt(7, emp.reportsTo);
 		stmt->setString(8, emp.jobTitle);
+		stmt->executeUpdate();
 		cout << "The new employee is added successfully." << endl;
+		conn->commit();
+		conn->terminateStatement(stmt);
+
+
 	}
+}
 
+void deleteEmployee(Connection* conn, int employeeNumber)
+{
 
+	if (!findEmployee(conn, employeeNumber, nullptr))
+	{
+		cout << "The employee with ID " << employeeNumber << " does not exist." << endl;
+	}
+	else
+	{
+		Statement* stmt = conn->createStatement();
+		stmt->setSQL("DELETE FROM dbs211_employees WHERE employeenumber = :1");
+		stmt->setInt(1, employeeNumber);
+		stmt->executeUpdate();
+		cout << "The employee with ID " << employeeNumber << " is deleted successfully." << endl;
+		conn->commit();
+		conn->terminateStatement(stmt);
+	}
 }
