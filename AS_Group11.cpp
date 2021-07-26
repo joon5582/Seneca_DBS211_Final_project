@@ -46,8 +46,6 @@ int main(void)
 	string pass = "38462531";
 	string constr = "myoracle12c.senecacollege.ca:1521/oracle12c";
 
-
-
 	try {
 		env = Environment::createEnvironment(Environment::DEFAULT);
 		conn = env->createConnection(user, pass, constr);
@@ -99,7 +97,7 @@ int main(void)
 		cout << "error";
 		cout << sqlExcp.getErrorCode() << ": " << sqlExcp.getMessage();
 	}
-	//system("pause");  // to stop the output window from closing in VS2013
+
 	return 0;
 }
 
@@ -147,7 +145,6 @@ int menu()
 
 void displayAllEmployees(Connection* conn)
 {
-
 	Statement* stmt = nullptr;
 	stmt = conn->createStatement();
 
@@ -156,7 +153,6 @@ void displayAllEmployees(Connection* conn)
 
 	if (!rs->next())
 	{
-
 		cout << "ResultSet is empty." << endl;
 	}
 	else {
@@ -201,8 +197,11 @@ void displayAllEmployees(Connection* conn)
 	}
 }
 
+
 void getEmployee(Employee* emp)
 {
+	char office[10] = "1";
+	int report = 1002;
 	cout << endl << "-------------- New Employee Information -------------" << endl;
 	cout << "Employee Number: ";
 	cin >> emp->employeeNumber;
@@ -214,14 +213,15 @@ void getEmployee(Employee* emp)
 	cin >> emp->extension;
 	cout << "Email: ";
 	cin >> emp->email;
-	cout << "Office Code: ";
-	cin >> emp->officecode;
-	cout << "Manager ID: ";
-	cin >> emp->reportsTo;
+	cout << "Office Code: 1" << endl;
+	strncpy(emp->officecode, office, 9);
+	cout << "Manager ID: 1002" << endl;
+	emp->reportsTo = report;
 	cout << "Job Title: ";
 	cin >> emp->jobTitle;
 	cout << endl;
 }
+
 
 int findEmployee(Connection* conn, int employeeNumber, Employee* emp)
 {
@@ -249,6 +249,7 @@ int findEmployee(Connection* conn, int employeeNumber, Employee* emp)
 	return res;
 }
 
+
 void displayEmployee(Connection* conn, Employee ep)
 {
 	cout << endl << "-------------- Employee Information -------------" << endl;
@@ -260,8 +261,8 @@ void displayEmployee(Connection* conn, Employee ep)
 	cout << "Office Code: " << ep.officecode << endl;
 	cout << "Manager ID: " << ep.reportsTo << endl;
 	cout << "Job Title: " << ep.jobTitle << endl << endl;
-
 }
+
 
 void insertEmployee(Connection* conn, struct Employee emp)
 {
@@ -286,10 +287,9 @@ void insertEmployee(Connection* conn, struct Employee emp)
 		cout << "The new employee is added successfully." << endl;
 		conn->commit();
 		conn->terminateStatement(stmt);
-
-
 	}
 }
+
 
 void deleteEmployee(Connection* conn, int employeeNumber)
 {
