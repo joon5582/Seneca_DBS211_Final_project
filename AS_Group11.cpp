@@ -33,6 +33,7 @@ void displayEmployee(Connection* conn, struct Employee emp);
 int menu();
 void displayAllEmployees(Connection* conn);
 void deleteEmployee(Connection* conn, int employeeNumber);
+void updateEmployee(Connection* conn, int employeeNumber);
 
 int main(void)
 {
@@ -76,7 +77,17 @@ int main(void)
 				insertEmployee(conn, temp);
 				break;
 			case 4:
-				cout << "4" << endl;
+				int empNum;
+				cout << "Employee Number: ";
+				cin >> empNum;
+				updateEmployee(conn, empNum);
+
+
+
+
+
+
+				//cout << "4" << endl;
 				break;
 			case 5:
 				int employeeNumber;
@@ -269,7 +280,7 @@ void insertEmployee(Connection* conn, struct Employee emp)
 
 	if (findEmployee(conn, emp.employeeNumber, nullptr))
 	{
-		cout << "An employee with the same employee number exists." << endl;
+		cout << "An employee with the same employee number exists." << endl << endl;
 	}
 	else
 	{
@@ -284,7 +295,7 @@ void insertEmployee(Connection* conn, struct Employee emp)
 		stmt->setInt(7, emp.reportsTo);
 		stmt->setString(8, emp.jobTitle);
 		stmt->executeUpdate();
-		cout << "The new employee is added successfully." << endl;
+		cout << "The new employee is added successfully." << endl << endl;
 		conn->commit();
 		conn->terminateStatement(stmt);
 	}
@@ -304,8 +315,39 @@ void deleteEmployee(Connection* conn, int employeeNumber)
 		stmt->setSQL("DELETE FROM dbs211_employees WHERE employeenumber = :1");
 		stmt->setInt(1, employeeNumber);
 		stmt->executeUpdate();
-		cout << "The employee with ID " << employeeNumber << " is deleted successfully." << endl;
+		cout << "The employee with ID " << employeeNumber << " is deleted successfully." << endl << endl;
 		conn->commit();
 		conn->terminateStatement(stmt);
 	}
+}
+
+void updateEmployee(Connection* conn, int employeeNumber)
+{
+	Employee emp;
+	if (findEmployee(conn, employeeNumber, &emp)) {
+		cout << "Last Name: " << emp.lastName << endl;
+		cout << "First Name: " << emp.firstName << endl;
+		cout << "Extension: ";
+
+		cin >> emp.extension;
+
+		Statement* stmt = conn->createStatement();
+
+		stmt->setSQL("UPDATE dbs211_employees SET EXTENSION = :1 where employeenumber = :2");
+
+
+		stmt->setString(1, emp.extension);
+
+		stmt->setInt(2, emp.employeeNumber);
+
+		stmt->executeUpdate();
+
+
+		cout << "The employee's extension is updated successfully." << endl << endl;
+		conn->commit();
+		conn->terminateStatement(stmt);
+
+	}
+	else cout << "The employee with ID " << employeeNumber << " does not exist." << endl << endl;
+
 }
