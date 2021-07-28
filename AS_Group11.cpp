@@ -81,13 +81,6 @@ int main(void)
 				cout << "Employee Number: ";
 				cin >> empNum;
 				updateEmployee(conn, empNum);
-
-
-
-
-
-
-				//cout << "4" << endl;
 				break;
 			case 5:
 				int employeeNumber;
@@ -277,7 +270,6 @@ void displayEmployee(Connection* conn, Employee ep)
 
 void insertEmployee(Connection* conn, struct Employee emp)
 {
-
 	if (findEmployee(conn, emp.employeeNumber, nullptr))
 	{
 		cout << "An employee with the same employee number exists." << endl << endl;
@@ -304,7 +296,6 @@ void insertEmployee(Connection* conn, struct Employee emp)
 
 void deleteEmployee(Connection* conn, int employeeNumber)
 {
-
 	if (!findEmployee(conn, employeeNumber, nullptr))
 	{
 		cout << "The employee with ID " << employeeNumber << " does not exist." << endl;
@@ -324,6 +315,7 @@ void deleteEmployee(Connection* conn, int employeeNumber)
 void updateEmployee(Connection* conn, int employeeNumber)
 {
 	Employee emp;
+
 	if (findEmployee(conn, employeeNumber, &emp)) {
 		cout << "Last Name: " << emp.lastName << endl;
 		cout << "First Name: " << emp.firstName << endl;
@@ -346,8 +338,6 @@ void updateEmployee(Connection* conn, int employeeNumber)
 		cout << "The employee's extension is updated successfully." << endl << endl;
 		conn->commit();
 		conn->terminateStatement(stmt);
-
 	}
 	else cout << "The employee with ID " << employeeNumber << " does not exist." << endl << endl;
-
 }
