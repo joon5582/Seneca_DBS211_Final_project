@@ -240,13 +240,13 @@ int findEmployee(Connection* conn, int employeeNumber, Employee* emp)
 		if (emp)
 		{
 			emp->employeeNumber = rs->getInt(1);
-			strncpy(emp->lastName, rs->getString(2).c_str(), 49);
-			strncpy(emp->firstName, rs->getString(3).c_str(), 49);
-			strncpy(emp->extension, rs->getString(4).c_str(), 9);
-			strncpy(emp->email, rs->getString(5).c_str(), 99);
-			strncpy(emp->officecode, rs->getString(6).c_str(), 9);
+			strncpy_s(emp->lastName, rs->getString(2).c_str(), 49);
+			strncpy_s(emp->firstName, rs->getString(3).c_str(), 49);
+			strncpy_s(emp->extension, rs->getString(4).c_str(), 9);
+			strncpy_s(emp->email, rs->getString(5).c_str(), 99);
+			strncpy_s(emp->officecode, rs->getString(6).c_str(), 9);
 			emp->reportsTo = rs->getInt(7);
-			strncpy(emp->jobTitle, rs->getString(8).c_str(), 49);
+			strncpy_s(emp->jobTitle, rs->getString(8).c_str(), 49);
 		}
 	}
 	conn->terminateStatement(stmt);
