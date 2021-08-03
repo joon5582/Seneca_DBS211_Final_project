@@ -26,6 +26,8 @@ struct Employee
 	int  reportsTo;
 	char jobTitle[50];
 };
+
+int getInt(const char* prompt);
 int findEmployee(Connection* conn, int employeeNumber, struct Employee* emp);
 void getEmployee(Employee* emp);
 void insertEmployee(Connection* conn, struct Employee emp);
@@ -53,12 +55,11 @@ int main(void)
 		while (check)
 		{
 			number = menu();
+			int employeeNum;
 			switch (number)
 			{
 			case 1:
-				int employeeNum;
-				cout << "Enter Employee Number: ";
-				cin >> employeeNum;
+				employeeNum = getInt("Enter Employee Number: ");
 				Employee emp1;
 				if (findEmployee(conn, employeeNum, &emp1))
 				{
@@ -77,16 +78,12 @@ int main(void)
 				insertEmployee(conn, temp);
 				break;
 			case 4:
-				int empNum;
-				cout << "Employee Number: ";
-				cin >> empNum;
-				updateEmployee(conn, empNum);
+				employeeNum = getInt("Enter Employee Number: ");
+				updateEmployee(conn, employeeNum);
 				break;
 			case 5:
-				int employeeNumber;
-				cout << "Enter Employee Number: ";
-				cin >> employeeNumber;
-				deleteEmployee(conn, employeeNumber);
+				employeeNum = getInt("Enter Employee Number: ");
+				deleteEmployee(conn, employeeNum);
 				break;
 			default:
 				cout << "Exiting..." << endl;
@@ -106,7 +103,30 @@ int main(void)
 }
 
 
+int getInt(const char* prompt)
+{
+	int val;
+	int flag = 0;
+	if (prompt)
+		cout << prompt;
+	do {
+		cin >> val;
+		if (cin.fail())
+		{
+			cout << "Bad integer value, try again: ";
+			cin.clear();
+			while (cin.get() != '\n');
+		}
+		else if (cin.get() != '\n')
+		{
+			cout << "Enter only an integer, try again: ";
+			while (cin.get() != '\n');
+		}
+		else flag = 1;
 
+	} while (flag == 0);
+	return val;
+}
 int menu()
 {
 	int choice = 0;
